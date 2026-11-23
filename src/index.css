@@ -1,111 +1,171 @@
+/* Apple Journal (iOS 17.2+) style for react-auth-notes */
+/* Commit this by monday: Apple Journal (iOS 17.2+) style for react-auth-notes */
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --bg: #F2F2F7;
+  --card: #FFFFFF;
+  --text: #000000;
+  --text-secondary: #8A8A8E;
+  --text-tertiary: #AEAEB2;
+  --accent: #007AFF;
+  --accent-soft: rgba(0, 122, 255, 0.10);
+  --border: #E5E5EA;
+  --search-bg: #E3E3E8;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --radius: 20px;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
 }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+button, input, textarea { font-family: inherit; }
+button { cursor: pointer; }
+
+/* App shell - phone-like column, like Journal */
+#root {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100svh;
+  margin: 0 auto;
+  background: var(--bg);
+  position: relative;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+/* --- Journal Header --- */
+.journal-header {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(242,242,247,0.85);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  padding: 16px 20px 10px;
+  border-bottom: 0.5px solid var(--border);
+}
+.journal-top-row { display: flex; align-items: center; justify-content: space-between; }
+.journal-title { font-size: 34px; font-weight: 800; letter-spacing: -0.5px; margin: 0; line-height: 1; }
+.journal-count { font-size: 13px; color: var(--text-secondary); margin: 6px 0 0; font-weight: 500; }
+.icon-btn {
+  width: 32px; height: 32px; border-radius: 50%; border: none;
+  background: transparent; color: var(--accent); font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+}
+.icon-btn:active { background: var(--accent-soft); }
+
+/* Search - iOS style */
+.journal-search {
+  width: 100%; margin-top: 14px; border: none; outline: none;
+  background: var(--search-bg); border-radius: 10px;
+  padding: 9px 12px 9px 34px; font-size: 16px; color: var(--text);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238A8A8E' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: 10px center;
+}
+.journal-search::placeholder { color: var(--text-secondary); }
+
+/* Filter pills */
+.journal-filters { display: flex; gap: 8px; margin-top: 12px; }
+.filter-pill {
+  border: none; padding: 7px 14px; border-radius: 999px;
+  background: #E3E3E8; color: #3C3C43; font-size: 14px; font-weight: 600;
+}
+.filter-pill.active { background: var(--text); color: #fff; }
+
+/* --- Timeline --- */
+.journal-list { padding: 8px 16px 110px; }
+.date-header {
+  font-size: 13px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.6px; color: var(--text-secondary);
+  margin: 22px 4px 8px;
+}
+.entry-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 16px 18px;
+  margin-bottom: 12px; text-align: left; width: 100%; border: none;
+  cursor: pointer; display: block;
+}
+.entry-card:active { transform: scale(0.99); }
+.entry-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.entry-date { font-size: 13px; color: var(--text-secondary); font-weight: 600; }
+.entry-bookmark { font-size: 16px; color: #FFCC00; background: none; border: none; padding: 0; }
+.entry-title { font-size: 19px; font-weight: 700; line-height: 1.25; margin: 0 0 4px; color: var(--text); }
+.entry-preview {
+  font-size: 16px; line-height: 1.45; color: #3C3C43; margin: 0;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.entry-readmore { font-size: 14px; color: var(--accent); font-weight: 600; margin-top: 6px; }
+
+/* Empty state */
+.empty-state { text-align: center; padding: 80px 24px; }
+.empty-state h2 { font-size: 22px; font-weight: 700; margin: 0 0 8px; }
+.empty-state p { color: var(--text-secondary); font-size: 16px; line-height: 1.5; margin: 0; }
+
+/* Floating + button */
+.fab {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  width: 56px; height: 56px; border-radius: 50%; border: none;
+  background: var(--accent); color: #fff; font-size: 30px; font-weight: 300;
+  box-shadow: 0 8px 20px rgba(0,122,255,0.35); z-index: 20; line-height: 1;
+}
+.fab:active { transform: translateX(-50%) scale(0.95); }
+
+/* --- Composer / Detail Sheet --- */
+.sheet-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.32); z-index: 30; display: flex; align-items: flex-end; justify-content: center; }
+.sheet {
+  background: #fff; width: 100%; max-width: 430px; max-height: 92svh; overflow-y: auto;
+  border-radius: 20px 20px 0 0; padding: 10px 20px 32px;
+}
+.sheet-handle { width: 36px; height: 5px; background: #D1D1D6; border-radius: 99px; margin: 4px auto 12px; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.sheet-top button { background: none; border: none; font-size: 17px; }
+.sheet-top .cancel { color: var(--text-secondary); }
+.sheet-top .done { color: var(--accent); font-weight: 700; }
+.sheet-top .done:disabled { opacity: 0.4; }
+.sheet-title-input {
+  width: 100%; border: none; outline: none; font-size: 26px; font-weight: 800;
+  letter-spacing: -0.4px; padding: 4px 0 10px; color: var(--text);
+}
+.sheet-title-input::placeholder, .sheet-body-input::placeholder { color: #C7C7CC; }
+.sheet-body-input {
+  width: 100%; min-height: 280px; border: none; outline: none; resize: none;
+  font-size: 17px; line-height: 1.55; color: var(--text); padding: 0;
+}
+.sheet-meta { font-size: 13px; color: var(--text-secondary); margin-top: 12px; display: flex; justify-content: space-between; }
+
+/* Detail view */
+.detail-body { font-size: 17px; line-height: 1.65; white-space: pre-wrap; color: var(--text); }
+.detail-actions { display: flex; gap: 10px; margin-top: 24px; }
+.btn-secondary, .btn-danger {
+  flex: 1; padding: 12px; border-radius: 12px; border: none; font-size: 16px; font-weight: 600;
+}
+.btn-secondary { background: #F2F2F7; color: var(--text); }
+.btn-danger { background: #FFF0F0; color: #FF3B30; }
+
+/* --- Auth --- */
+.auth-wrap { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 32px 24px; background: var(--bg); }
+.auth-card { background: #fff; border-radius: 24px; padding: 28px 24px; box-shadow: var(--shadow); }
+.auth-card h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.5px; margin: 0 0 6px; text-align: left; }
+.auth-card p { color: var(--text-secondary); font-size: 16px; margin: 0 0 22px; text-align: left; }
+.auth-input {
+  width: 100%; padding: 13px 14px; border: 1px solid var(--border); border-radius: 12px;
+  font-size: 16px; outline: none; margin-bottom: 10px; background: #F9F9FB;
+}
+.auth-input:focus { border-color: var(--accent); background: #fff; }
+.auth-btn {
+  width: 100%; padding: 14px; border: none; border-radius: 12px;
+  background: var(--accent); color: #fff; font-size: 17px; font-weight: 700; margin-top: 4px;
+}
+.auth-btn.secondary { background: #F2F2F7; color: var(--text); }
+.auth-error { color: #FF3B30; font-size: 14px; margin: 8px 0 0; }
+.auth-switch { text-align: center; color: var(--text-secondary); font-size: 14px; margin-top: 16px; }
+.auth-switch button { background: none; border: none; color: var(--accent); font-weight: 600; font-size: 14px; }
+
+.loading { text-align: center; padding-top: 120px; color: var(--text-secondary); font-size: 16px; }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    --bg: #000000; --card: #1C1C1E; --text: #FFFFFF;
+    --text-secondary: #98989F; --border: #38383A; --search-bg: #2C2C2E;
+    --shadow: 0 1px 3px rgba(0,0,0,0.4);
   }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  .sheet, .auth-card { background: #1C1C1E; }
+  .auth-input { background: #2C2C2E; color: #fff; }
+  .btn-secondary, .auth-btn.secondary { background: #2C2C2E; color: #fff; }
 }
